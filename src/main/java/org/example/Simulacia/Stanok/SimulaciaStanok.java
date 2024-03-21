@@ -24,10 +24,15 @@ public class SimulaciaStanok extends SimulacneJadro
     private Queue<Agent> front;
     private boolean obsluhaPrebieha;
 
-    // Statistiky
+    // Statistiky 1 replikacie
     private DiskretnaStatistika statistikaCasSystem;
     private DiskretnaStatistika statistikaCasFront;
     private SpojitaStatistika statistikaVelkostFrontu;
+
+    // Celkove statistiky
+    private DiskretnaStatistika celkovaStatistikaCasSystem;
+    private DiskretnaStatistika celkovaStatistikaCasFront;
+    private DiskretnaStatistika celkovaStatistikaVelkostFrontu;
 
     public SimulaciaStanok(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int nasada, boolean pouziNasadu)
     {
@@ -101,11 +106,19 @@ public class SimulaciaStanok extends SimulacneJadro
         this.spojityExponencialnyGenerator = new SpojityExponencialnyGenerator(1.0 / 240.0, this.generatorNasad);
         this.spojityTrojuholnikovyGenerator = new SpojityTrojuholnikovyGenerator(100.0, 400.0, 120.0,
             this.generatorNasad);
+
+        // Vynulovanie statistik
+        this.celkovaStatistikaCasSystem = new DiskretnaStatistika();
+        this.celkovaStatistikaCasFront = new DiskretnaStatistika();
+        this.celkovaStatistikaVelkostFrontu = new DiskretnaStatistika();
     }
 
     @Override
     protected void poReplikaciach()
     {
+        System.out.println("[STATISTIKA] Priemerna doba v systeme: " + this.celkovaStatistikaCasSystem.vypocitajStatistiku());
+        System.out.println("[STATISTIKA] Priemerna doba vo fronte: " + this.celkovaStatistikaCasFront.vypocitajStatistiku());
+        System.out.println("[STATISTIKA] Priemerna velkost frontu: " + this.celkovaStatistikaVelkostFrontu.vypocitajStatistiku());
     }
 
     @Override
@@ -129,8 +142,8 @@ public class SimulaciaStanok extends SimulacneJadro
     {
         this.statistikaVelkostFrontu.pridajHodnotu(this.getAktualnySimulacnyCas(), this.getPocetAgentovVoFronte());
 
-        System.out.println("[STATISTIKA] Priemerna doba v systeme: " + this.statistikaCasSystem.vypocitajStatistiku());
-        System.out.println("[STATISTIKA] Priemerna doba vo fronte: " + this.statistikaCasFront.vypocitajStatistiku());
-        System.out.println("[STATISTIKA] Priemerna velkost frontu: " + this.statistikaVelkostFrontu.vypocitajStatistiku());
+        this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.vypocitajStatistiku());
+        this.celkovaStatistikaCasFront.pridajHodnotu(this.statistikaCasFront.vypocitajStatistiku());
+        this.celkovaStatistikaVelkostFrontu.pridajHodnotu(this.statistikaVelkostFrontu.vypocitajStatistiku());
     }
 }
