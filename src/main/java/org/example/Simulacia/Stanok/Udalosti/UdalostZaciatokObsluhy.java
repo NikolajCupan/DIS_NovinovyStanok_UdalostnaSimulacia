@@ -23,5 +23,12 @@ public class UdalostZaciatokObsluhy extends Udalost
     {
         this.vypis();
         SimulaciaStanok simulacia = (SimulaciaStanok)this.getSimulacneJadro();
+        simulacia.zmenStavObsluhy(true);
+
+        double dlzkaObsluhy = simulacia.getSpojityRovnomernyGenerator().sample();
+        double casVykonania = this.getCasVykonania() + dlzkaObsluhy;
+
+        UdalostKoniecObsluhy koniecObsluhy = new UdalostKoniecObsluhy(this.getSimulacneJadro(), casVykonania);
+        simulacia.naplanujUdalost(koniecObsluhy);
     }
 }

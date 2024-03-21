@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 public abstract class SimulacneJadro
 {
     private final int pocetReplikacii;
-    private double dlzkaTrvaniaSimulacie;
+    private final double dlzkaTrvaniaSimulacie;
 
     private double aktualnySimulacnyCas;
 
@@ -82,19 +82,19 @@ public abstract class SimulacneJadro
         this.aktualnySimulacnyCas = 0.0;
     }
 
-    public void pridajUdalost(Udalost udalost)
+    public void naplanujUdalost(Udalost udalost)
     {
         this.kalendarUdalosti.add(udalost);
-    }
-
-    public double getAktualnySimulacnyCas()
-    {
-        return this.aktualnySimulacnyCas;
     }
 
     public void nastavKomparator(Comparator komparator)
     {
         this.komparatorUdalosti = komparator;
+    }
+
+    public double getAktualnySimulacnyCas()
+    {
+        return this.aktualnySimulacnyCas;
     }
 
     protected abstract void predReplikaciami();

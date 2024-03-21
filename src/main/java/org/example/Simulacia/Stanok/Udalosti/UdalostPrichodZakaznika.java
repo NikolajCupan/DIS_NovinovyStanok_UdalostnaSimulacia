@@ -1,19 +1,14 @@
 package org.example.Simulacia.Stanok.Udalosti;
 
-import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Simulacia.SimulacneJadro;
 import org.example.Simulacia.Stanok.SimulaciaStanok;
 import org.example.Simulacia.Udalost;
 
 public class UdalostPrichodZakaznika extends Udalost
 {
-    private final SpojityExponencialnyGenerator spojityExponencialnyGenerator;
-
-    public UdalostPrichodZakaznika(SimulacneJadro simulacneJadro, double casVykonania,
-        SpojityExponencialnyGenerator spojityExponencialnyGenerator)
+    public UdalostPrichodZakaznika(SimulacneJadro simulacneJadro, double casVykonania)
     {
         super(simulacneJadro, casVykonania);
-        this.spojityExponencialnyGenerator = spojityExponencialnyGenerator;
     }
 
     private void vypis()
@@ -30,12 +25,11 @@ public class UdalostPrichodZakaznika extends Udalost
         SimulaciaStanok simulacia = (SimulaciaStanok)this.getSimulacneJadro();
 
         // Prichod noveho zakaznika sa planuje vzdy
-        double dalsiPrichodPo = this.spojityExponencialnyGenerator.sample();
+        double dalsiPrichodPo = simulacia.getSpojityExponencialnyGenerator().sample();
         double casUdalosti = simulacia.getAktualnySimulacnyCas() + dalsiPrichodPo;
 
-        UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casUdalosti,
-                this.spojityExponencialnyGenerator);
-        simulacia.pridajUdalost(dalsiPrichod);
+        UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casUdalosti);
+        simulacia.naplanujUdalost(dalsiPrichod);
 
         if (simulacia.jeObsluhaObsadena())
         {
@@ -45,8 +39,8 @@ public class UdalostPrichodZakaznika extends Udalost
         else
         {
             // Nikto nie je obsluhovany, mozno obsluzit zakaznika
-            UdalostZaciatokObsluhy uZaciatokObsluhy = new UdalostZaciatokObsluhy(this.getSimulacneJadro(), this.getCasVykonania());
-            simulacia.pridajUdalost(uZaciatokObsluhy);
+            UdalostZaciatokObsluhy zaciatokObsluhy = new UdalostZaciatokObsluhy(this.getSimulacneJadro(), this.getCasVykonania());
+            simulacia.naplanujUdalost(zaciatokObsluhy);
         }
     }
 }

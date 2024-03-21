@@ -2,6 +2,7 @@ package org.example.Simulacia.Stanok;
 
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.SpojityExponencialnyGenerator;
+import org.example.Generatory.SpojityRovnomernyGenerator;
 import org.example.Simulacia.SimulacneJadro;
 import org.example.Simulacia.Stanok.Udalosti.UdalostKomparator;
 import org.example.Simulacia.Stanok.Udalosti.UdalostPrichodZakaznika;
@@ -13,6 +14,7 @@ public class SimulaciaStanok extends SimulacneJadro
 {
     private final GeneratorNasad generatorNasad;
     private SpojityExponencialnyGenerator spojityExponencialnyGenerator;
+    private SpojityRovnomernyGenerator spojityRovnomernyGenerator;
 
     private int pocetLudiVoFronte;
     private boolean obsluhaPrebieha;
@@ -50,6 +52,21 @@ public class SimulaciaStanok extends SimulacneJadro
         this.pocetLudiVoFronte--;
     }
 
+    public int getPocetLudiVoFronte()
+    {
+        return this.pocetLudiVoFronte;
+    }
+
+    public SpojityExponencialnyGenerator getSpojityExponencialnyGenerator()
+    {
+        return this.spojityExponencialnyGenerator;
+    }
+
+    public SpojityRovnomernyGenerator getSpojityRovnomernyGenerator()
+    {
+        return this.spojityRovnomernyGenerator;
+    }
+
     @Override
     protected void predReplikaciami()
     {
@@ -57,6 +74,7 @@ public class SimulaciaStanok extends SimulacneJadro
         this.nastavKomparator(komparator);
 
         this.spojityExponencialnyGenerator = new SpojityExponencialnyGenerator(1.0 / 240.0, this.generatorNasad);
+        this.spojityRovnomernyGenerator = new SpojityRovnomernyGenerator(250.0, 300.0, this.generatorNasad);
     }
 
     @Override
@@ -71,9 +89,8 @@ public class SimulaciaStanok extends SimulacneJadro
         this.obsluhaPrebieha = false;
 
         // Naplanovania prichodu 1. zakaznika v case 0.0
-        UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0,
-            this.spojityExponencialnyGenerator);
-        this.pridajUdalost(prichod);
+        UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0);
+        this.naplanujUdalost(prichod);
     }
 
     @Override
