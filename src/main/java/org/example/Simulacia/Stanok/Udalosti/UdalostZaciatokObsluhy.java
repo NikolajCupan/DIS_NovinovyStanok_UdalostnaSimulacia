@@ -17,7 +17,9 @@ public class UdalostZaciatokObsluhy extends Udalost
     {
         if (Konstanty.DEBUG_VYPIS_UDALOST)
         {
-            System.out.print("[UDALOST " + this.getAgent().getID() + "]     ");
+            System.out.print("[UDALOST ");
+            System.out.format("%6s", this.getAgent().getID());
+            System.out.print("]   ");
             System.out.format("%-35s", "Zaciatok obsluhy zakaznika");
             System.out.println(this.getCasVykonania());
         }
