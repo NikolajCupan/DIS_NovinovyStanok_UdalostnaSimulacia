@@ -3,12 +3,16 @@ package org.example.Simulacia.Stanok;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Generatory.SpojityTrojuholnikovyGenerator;
+import org.example.Ostatne.Identifikator;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.Udalosti.UdalostKomparator;
 import org.example.Simulacia.Stanok.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
+import org.example.Simulacia.Statistiky.PriemerneCakanieVRade;
 
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class SimulaciaStanok extends SimulacneJadro
 {
@@ -16,8 +20,11 @@ public class SimulaciaStanok extends SimulacneJadro
     private SpojityExponencialnyGenerator spojityExponencialnyGenerator;
     private SpojityTrojuholnikovyGenerator spojityTrojuholnikovyGenerator;
 
-    private int pocetLudiVoFronte;
+    private Queue<Agent> front;
     private boolean obsluhaPrebieha;
+
+    // Statistiky
+    protected PriemerneCakanieVRade priemerneCakanieVRade;
 
     public SimulaciaStanok(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int nasada, boolean pouziNasadu)
     {
@@ -27,24 +34,24 @@ public class SimulaciaStanok extends SimulacneJadro
         this.generatorNasad = new GeneratorNasad();
     }
 
-    public void pridajZakaznikaDoFrontu()
+    public void pridajAgentaDoFrontu(Agent agent)
     {
-        this.pocetLudiVoFronte++;
+        this.front.add(agent);
     }
 
-    public void odoberZakaznikaZFrontu()
+    public Agent odoberAgentaZFrontu()
     {
-        if (this.pocetLudiVoFronte == 0)
+        if (this.front.isEmpty())
         {
-            throw new RuntimeException("Pokus o vybratie zakaznika z frontu, ktory je prazdny!");
+            throw new RuntimeException("Pokus o vybratie agenta z frontu, ktory je prazdny!");
         }
 
-        this.pocetLudiVoFronte--;
+        return this.front.poll();
     }
 
-    public int getPocetLudiVoFronte()
+    public int getPocetAgentovVoFronte()
     {
-        return this.pocetLudiVoFronte;
+        return this.front.size();
     }
 
     public boolean getObsluhaPrebieha()
@@ -74,7 +81,7 @@ public class SimulaciaStanok extends SimulacneJadro
         this.nastavKomparator(komparator);
 
         this.spojityExponencialnyGenerator = new SpojityExponencialnyGenerator(1.0 / 240.0, this.generatorNasad);
-        this.spojityTrojuholnikovyGenerator = new SpojityTrojuholnikovyGenerator(100.0, 120.0, 400.0,
+        this.spojityTrojuholnikovyGenerator = new SpojityTrojuholnikovyGenerator(100.0, 400.0, 120.0,
             this.generatorNasad);
     }
 
@@ -86,11 +93,14 @@ public class SimulaciaStanok extends SimulacneJadro
     @Override
     protected void predReplikaciou()
     {
-        this.pocetLudiVoFronte = 0;
+        this.front = new LinkedList<>();
         this.obsluhaPrebieha = false;
 
+        // Vynulovanie statistik
+        this.priemerneCakanieVRade = new PriemerneCakanieVRade();
+
         // Naplanovania prichodu 1. zakaznika v case 0.0
-        UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0);
+        UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0, new Agent(Identifikator.getID()));
         this.naplanujUdalost(prichod);
     }
 
