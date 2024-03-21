@@ -8,7 +8,7 @@ public class Main
     public static void main(String[] args)
     {
         SimulaciaStanok simulacia = new SimulaciaStanok(1,
-        Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND, 420, true);
+        Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND, 420, false);
         simulacia.simuluj();
     }
 }

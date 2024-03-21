@@ -8,7 +8,7 @@ import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.Udalosti.UdalostKomparator;
 import org.example.Simulacia.Stanok.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.Statistiky.PriemerneCakanieVRade;
+import org.example.Simulacia.Statistiky.CasVSysteme;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -24,7 +24,7 @@ public class SimulaciaStanok extends SimulacneJadro
     private boolean obsluhaPrebieha;
 
     // Statistiky
-    protected PriemerneCakanieVRade priemerneCakanieVRade;
+    private CasVSysteme casVSysteme;
 
     public SimulaciaStanok(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int nasada, boolean pouziNasadu)
     {
@@ -69,6 +69,11 @@ public class SimulaciaStanok extends SimulacneJadro
         return this.spojityTrojuholnikovyGenerator;
     }
 
+    public CasVSysteme getCasVSysteme()
+    {
+        return this.casVSysteme;
+    }
+
     public void setObsluhaPrebieha(boolean obsluhaPrebieha)
     {
         this.obsluhaPrebieha = obsluhaPrebieha;
@@ -97,7 +102,7 @@ public class SimulaciaStanok extends SimulacneJadro
         this.obsluhaPrebieha = false;
 
         // Vynulovanie statistik
-        this.priemerneCakanieVRade = new PriemerneCakanieVRade();
+        this.casVSysteme = new CasVSysteme();
 
         // Naplanovania prichodu 1. zakaznika v case 0.0
         UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0, new Agent(Identifikator.getID()));
@@ -107,5 +112,6 @@ public class SimulaciaStanok extends SimulacneJadro
     @Override
     protected void poReplikacii()
     {
+        System.out.println("Statistika priemerna doba v systeme: " + this.casVSysteme.vypocitajStatistiku());
     }
 }

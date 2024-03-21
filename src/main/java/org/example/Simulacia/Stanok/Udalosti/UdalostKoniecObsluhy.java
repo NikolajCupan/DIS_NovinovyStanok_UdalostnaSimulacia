@@ -31,6 +31,9 @@ public class UdalostKoniecObsluhy extends Udalost
         agent.setCasKoncaObsluhy(this.getCasVykonania());
         agent.vypis();
 
+        // Zaznamenanie statistik
+        simulacia.getCasVSysteme().pridajHodnotu(agent.getCasKoncaObsluhy() - agent.getCasPrichodu());
+
         // Naplanovanie dalsej obsluhy
         if (simulacia.getPocetAgentovVoFronte() == 0)
         {
