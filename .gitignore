@@ -36,3 +36,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/test_spojity_exponencialny_generator.txt
+/test_spojity_trojuholnikovy_generator.txt

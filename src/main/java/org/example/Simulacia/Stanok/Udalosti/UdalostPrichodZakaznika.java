@@ -31,6 +31,7 @@ public class UdalostPrichodZakaznika extends Udalost
         UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casUdalosti);
         simulacia.naplanujUdalost(dalsiPrichod);
 
+        /*
         if (simulacia.jeObsluhaObsadena())
         {
             // Niekto je obsluhovany, pridaj zakaznika do frontu
@@ -42,5 +43,6 @@ public class UdalostPrichodZakaznika extends Udalost
             UdalostZaciatokObsluhy zaciatokObsluhy = new UdalostZaciatokObsluhy(this.getSimulacneJadro(), this.getCasVykonania());
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }
+        */
     }
 }

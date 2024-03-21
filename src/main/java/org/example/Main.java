@@ -5,7 +5,7 @@ import org.example.Simulacia.Stanok.SimulaciaStanok;
 
 public class Main
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         SimulaciaStanok simulacia = new SimulaciaStanok(1,
         Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND, 0, false);
