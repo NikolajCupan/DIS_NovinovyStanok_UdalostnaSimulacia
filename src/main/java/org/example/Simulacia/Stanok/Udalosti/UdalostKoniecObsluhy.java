@@ -1,8 +1,8 @@
 package org.example.Simulacia.Stanok.Udalosti;
 
-import org.example.Simulacia.SimulacneJadro;
+import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.SimulaciaStanok;
-import org.example.Simulacia.Udalost;
+import org.example.Simulacia.Jadro.Udalost;
 
 public class UdalostKoniecObsluhy extends Udalost
 {
@@ -23,7 +23,7 @@ public class UdalostKoniecObsluhy extends Udalost
     {
         this.vypis();
         SimulaciaStanok simulacia = (SimulaciaStanok)this.getSimulacneJadro();
-        simulacia.zmenStavObsluhy(false);
+        simulacia.setObsluhaPrebieha(false);
 
         // Naplanovanie dalsej obsluhy
         if (simulacia.getPocetLudiVoFronte() == 0)

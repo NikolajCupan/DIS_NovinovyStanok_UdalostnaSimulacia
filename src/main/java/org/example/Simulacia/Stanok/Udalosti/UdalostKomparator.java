@@ -1,6 +1,6 @@
 package org.example.Simulacia.Stanok.Udalosti;
 
-import org.example.Simulacia.Udalost;
+import org.example.Simulacia.Jadro.Udalost;
 
 import java.util.Comparator;
 

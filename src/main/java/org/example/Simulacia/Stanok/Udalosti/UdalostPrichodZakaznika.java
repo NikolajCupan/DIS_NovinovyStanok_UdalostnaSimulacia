@@ -1,8 +1,8 @@
 package org.example.Simulacia.Stanok.Udalosti;
 
-import org.example.Simulacia.SimulacneJadro;
+import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.SimulaciaStanok;
-import org.example.Simulacia.Udalost;
+import org.example.Simulacia.Jadro.Udalost;
 
 public class UdalostPrichodZakaznika extends Udalost
 {
@@ -31,8 +31,7 @@ public class UdalostPrichodZakaznika extends Udalost
         UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casUdalosti);
         simulacia.naplanujUdalost(dalsiPrichod);
 
-        /*
-        if (simulacia.jeObsluhaObsadena())
+        if (simulacia.getObsluhaPrebieha())
         {
             // Niekto je obsluhovany, pridaj zakaznika do frontu
             simulacia.pridajZakaznikaDoFrontu();
@@ -40,9 +39,8 @@ public class UdalostPrichodZakaznika extends Udalost
         else
         {
             // Nikto nie je obsluhovany, mozno obsluzit zakaznika
-            UdalostZaciatokObsluhy zaciatokObsluhy = new UdalostZaciatokObsluhy(this.getSimulacneJadro(), this.getCasVykonania());
+            UdalostZaciatokObsluhy zaciatokObsluhy = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania());
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }
-        */
     }
 }

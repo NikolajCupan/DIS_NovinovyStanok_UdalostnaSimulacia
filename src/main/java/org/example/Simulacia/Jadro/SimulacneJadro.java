@@ -1,4 +1,4 @@
-package org.example.Simulacia;
+package org.example.Simulacia.Jadro;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -77,8 +77,8 @@ public abstract class SimulacneJadro
         {
             throw new RuntimeException("Komparator udalosti nebol nastaveny!");
         }
-        this.kalendarUdalosti = new PriorityQueue<>(this.komparatorUdalosti);
 
+        this.kalendarUdalosti = new PriorityQueue<>(this.komparatorUdalosti);
         this.aktualnySimulacnyCas = 0.0;
     }
 

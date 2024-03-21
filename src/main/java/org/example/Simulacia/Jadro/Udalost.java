@@ -1,4 +1,4 @@
-package org.example.Simulacia;
+package org.example.Simulacia.Jadro;
 
 public abstract class Udalost
 {

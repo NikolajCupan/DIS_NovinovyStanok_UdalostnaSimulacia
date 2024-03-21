@@ -2,11 +2,11 @@ package org.example.Simulacia.Stanok;
 
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.SpojityExponencialnyGenerator;
-import org.example.Generatory.SpojityRovnomernyGenerator;
-import org.example.Simulacia.SimulacneJadro;
+import org.example.Generatory.SpojityTrojuholnikovyGenerator;
+import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.Udalosti.UdalostKomparator;
 import org.example.Simulacia.Stanok.Udalosti.UdalostPrichodZakaznika;
-import org.example.Simulacia.Udalost;
+import org.example.Simulacia.Jadro.Udalost;
 
 import java.util.Comparator;
 
@@ -14,7 +14,7 @@ public class SimulaciaStanok extends SimulacneJadro
 {
     private final GeneratorNasad generatorNasad;
     private SpojityExponencialnyGenerator spojityExponencialnyGenerator;
-    private SpojityRovnomernyGenerator spojityRovnomernyGenerator;
+    private SpojityTrojuholnikovyGenerator spojityTrojuholnikovyGenerator;
 
     private int pocetLudiVoFronte;
     private boolean obsluhaPrebieha;
@@ -25,16 +25,6 @@ public class SimulaciaStanok extends SimulacneJadro
 
         GeneratorNasad.inicializujGeneratorNasad(nasada, pouziNasadu);
         this.generatorNasad = new GeneratorNasad();
-    }
-
-    public void zmenStavObsluhy(boolean obsluhaPrebieha)
-    {
-        this.obsluhaPrebieha = obsluhaPrebieha;
-    }
-
-    public boolean jeObsluhaObsadena()
-    {
-        return this.obsluhaPrebieha;
     }
 
     public void pridajZakaznikaDoFrontu()
@@ -57,14 +47,24 @@ public class SimulaciaStanok extends SimulacneJadro
         return this.pocetLudiVoFronte;
     }
 
+    public boolean getObsluhaPrebieha()
+    {
+        return this.obsluhaPrebieha;
+    }
+
     public SpojityExponencialnyGenerator getSpojityExponencialnyGenerator()
     {
         return this.spojityExponencialnyGenerator;
     }
 
-    public SpojityRovnomernyGenerator getSpojityRovnomernyGenerator()
+    public SpojityTrojuholnikovyGenerator getSpojityTrojuholnikovyGenerator()
     {
-        return this.spojityRovnomernyGenerator;
+        return this.spojityTrojuholnikovyGenerator;
+    }
+
+    public void setObsluhaPrebieha(boolean obsluhaPrebieha)
+    {
+        this.obsluhaPrebieha = obsluhaPrebieha;
     }
 
     @Override
@@ -74,7 +74,8 @@ public class SimulaciaStanok extends SimulacneJadro
         this.nastavKomparator(komparator);
 
         this.spojityExponencialnyGenerator = new SpojityExponencialnyGenerator(1.0 / 240.0, this.generatorNasad);
-        this.spojityRovnomernyGenerator = new SpojityRovnomernyGenerator(250.0, 300.0, this.generatorNasad);
+        this.spojityTrojuholnikovyGenerator = new SpojityTrojuholnikovyGenerator(100.0, 120.0, 400.0,
+            this.generatorNasad);
     }
 
     @Override

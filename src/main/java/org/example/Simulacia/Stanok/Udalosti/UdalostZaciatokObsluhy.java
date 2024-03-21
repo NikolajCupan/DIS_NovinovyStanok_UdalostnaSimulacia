@@ -1,8 +1,8 @@
 package org.example.Simulacia.Stanok.Udalosti;
 
-import org.example.Simulacia.SimulacneJadro;
+import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.SimulaciaStanok;
-import org.example.Simulacia.Udalost;
+import org.example.Simulacia.Jadro.Udalost;
 
 public class UdalostZaciatokObsluhy extends Udalost
 {
@@ -23,12 +23,12 @@ public class UdalostZaciatokObsluhy extends Udalost
     {
         this.vypis();
         SimulaciaStanok simulacia = (SimulaciaStanok)this.getSimulacneJadro();
-        simulacia.zmenStavObsluhy(true);
+        simulacia.setObsluhaPrebieha(true);
 
-        double dlzkaObsluhy = simulacia.getSpojityRovnomernyGenerator().sample();
+        double dlzkaObsluhy = simulacia.getSpojityTrojuholnikovyGenerator().sample();
         double casVykonania = this.getCasVykonania() + dlzkaObsluhy;
 
-        UdalostKoniecObsluhy koniecObsluhy = new UdalostKoniecObsluhy(this.getSimulacneJadro(), casVykonania);
+        UdalostKoniecObsluhy koniecObsluhy = new UdalostKoniecObsluhy(simulacia, casVykonania);
         simulacia.naplanujUdalost(koniecObsluhy);
     }
 }
