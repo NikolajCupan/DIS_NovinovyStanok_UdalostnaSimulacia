@@ -106,7 +106,7 @@ public class SimulaciaStanok extends SimulacneJadro
         this.spojityExponencialnyGenerator = new SpojityExponencialnyGenerator(1.0 / 240.0, this.generatorNasad);
         this.spojityTrojuholnikovyGenerator = new SpojityTrojuholnikovyGenerator(100.0, 400.0, 120.0, this.generatorNasad);
 
-        // Vynulovanie statistik
+        // Vynulovanie celkovych statistik
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika();
         this.celkovaStatistikaCasFront = new DiskretnaStatistika();
         this.celkovaStatistikaVelkostFrontu = new DiskretnaStatistika();
@@ -115,9 +115,9 @@ public class SimulaciaStanok extends SimulacneJadro
     @Override
     protected void poReplikaciach()
     {
-        this.celkovaStatistikaCasSystem.vypocitajStatistiky();
-        this.celkovaStatistikaCasFront.vypocitajStatistiky();
-        this.celkovaStatistikaVelkostFrontu.vypocitajStatistiky();
+        this.celkovaStatistikaCasSystem.prepocitajStatistiky();
+        this.celkovaStatistikaCasFront.prepocitajStatistiky();
+        this.celkovaStatistikaVelkostFrontu.prepocitajStatistiky();
 
         System.out.println("[STATISTIKA] Priemerna doba v systeme: "
             + this.celkovaStatistikaCasSystem.getPriemer() + " [" + this.celkovaStatistikaCasSystem.getDolnaHranicaIS()
@@ -151,8 +151,8 @@ public class SimulaciaStanok extends SimulacneJadro
     {
         this.statistikaVelkostFrontu.pridajHodnotu(this.getAktualnySimulacnyCas(), this.getPocetAgentovVoFronte());
 
-        this.statistikaCasSystem.vypocitajStatistiky();
-        this.statistikaCasFront.vypocitajStatistiky();
+        this.statistikaCasSystem.prepocitajStatistiky();
+        this.statistikaCasFront.prepocitajStatistiky();
 
         this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
         this.celkovaStatistikaCasFront.pridajHodnotu(this.statistikaCasFront.getPriemer());

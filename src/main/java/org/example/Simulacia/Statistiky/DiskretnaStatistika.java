@@ -13,6 +13,7 @@ public class DiskretnaStatistika
 
     private double dolnaHranicaIS;
     private double hornaHranicaIS;
+
     private boolean statistikyVypocitane;
 
     public DiskretnaStatistika()
@@ -46,7 +47,7 @@ public class DiskretnaStatistika
         }
     }
 
-    public void vypocitajStatistiky()
+    public void prepocitajStatistiky()
     {
         this.vypocitajPriemer();
         this.vypocitajSmerodajnuOdchylku();

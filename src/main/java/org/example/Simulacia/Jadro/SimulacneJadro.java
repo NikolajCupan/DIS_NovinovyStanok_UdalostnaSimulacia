@@ -1,5 +1,7 @@
 package org.example.Simulacia.Jadro;
 
+import org.example.Ostatne.Konstanty;
+
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -13,6 +15,9 @@ public abstract class SimulacneJadro
 
     private PriorityQueue<Udalost> kalendarUdalosti;
     private Comparator komparatorUdalosti;
+
+    private volatile boolean simulaciaPozastavena;
+    private volatile boolean simulaciaUkoncena;
 
     protected SimulacneJadro(int pocetReplikacii, double dlzkaTrvaniaSimulacie)
     {
@@ -38,7 +43,10 @@ public abstract class SimulacneJadro
 
     public void simuluj()
     {
+        this.simulaciaPozastavena = false;
+        this.simulaciaUkoncena = false;
         this.aktualnaReplikacia = 1;
+
         this.predReplikaciami();
 
         while (this.aktualnaReplikacia <= this.pocetReplikacii)
@@ -49,6 +57,17 @@ public abstract class SimulacneJadro
             while (!this.kalendarUdalosti.isEmpty()
                    && this.aktualnySimulacnyCas <= this.dlzkaTrvaniaSimulacie)
             {
+                if (this.simulaciaUkoncena)
+                {
+                    break;
+                }
+
+                if (this.simulaciaPozastavena)
+                {
+                    this.uspiSimulaciu();
+                    continue;
+                }
+
                 Udalost aktualnaUdalost = this.kalendarUdalosti.poll();
                 double casVykonaniaUdalosti = aktualnaUdalost.getCasVykonania();
 
@@ -94,6 +113,23 @@ public abstract class SimulacneJadro
         this.komparatorUdalosti = komparator;
     }
 
+    public void toggleSimulaciaPozastavena()
+    {
+        if (this.simulaciaPozastavena)
+        {
+            this.simulaciaPozastavena = false;
+        }
+        else
+        {
+            this.simulaciaPozastavena = true;
+        }
+    }
+
+    public void ukonciSimulaciu()
+    {
+        this.simulaciaUkoncena = true;
+    }
+
     public int getAktualnaReplikacia()
     {
         return this.aktualnaReplikacia;
@@ -102,6 +138,18 @@ public abstract class SimulacneJadro
     public double getAktualnySimulacnyCas()
     {
         return this.aktualnySimulacnyCas;
+    }
+
+    private void uspiSimulaciu()
+    {
+        try
+        {
+            Thread.sleep(Konstanty.DLZKA_PAUZY_MS);
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Pri uspavani simulacia nastala chyba!");
+        }
     }
 
     protected abstract void predReplikaciami();
