@@ -8,7 +8,8 @@ import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.Udalosti.UdalostKomparator;
 import org.example.Simulacia.Stanok.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.Statistiky.CasVSysteme;
+import org.example.Simulacia.Statistiky.DiskretnaStatistika;
+import org.example.Simulacia.Statistiky.SpojitaStatistika;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -24,7 +25,9 @@ public class SimulaciaStanok extends SimulacneJadro
     private boolean obsluhaPrebieha;
 
     // Statistiky
-    private CasVSysteme casVSysteme;
+    private DiskretnaStatistika statistikaCasSystem;
+    private DiskretnaStatistika statistikaCasFront;
+    private SpojitaStatistika statistikaVelkostFrontu;
 
     public SimulaciaStanok(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int nasada, boolean pouziNasadu)
     {
@@ -69,9 +72,19 @@ public class SimulaciaStanok extends SimulacneJadro
         return this.spojityTrojuholnikovyGenerator;
     }
 
-    public CasVSysteme getCasVSysteme()
+    public DiskretnaStatistika getStatistikaCasSystem()
     {
-        return this.casVSysteme;
+        return this.statistikaCasSystem;
+    }
+
+    public DiskretnaStatistika getStatistikaCasFront()
+    {
+        return this.statistikaCasFront;
+    }
+
+    public SpojitaStatistika getStatistikaVelkostFrontu()
+    {
+        return this.statistikaVelkostFrontu;
     }
 
     public void setObsluhaPrebieha(boolean obsluhaPrebieha)
@@ -102,7 +115,9 @@ public class SimulaciaStanok extends SimulacneJadro
         this.obsluhaPrebieha = false;
 
         // Vynulovanie statistik
-        this.casVSysteme = new CasVSysteme();
+        this.statistikaCasSystem = new DiskretnaStatistika();
+        this.statistikaCasFront = new DiskretnaStatistika();
+        this.statistikaVelkostFrontu = new SpojitaStatistika();
 
         // Naplanovania prichodu 1. zakaznika v case 0.0
         UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0, new Agent(Identifikator.getID()));
@@ -112,6 +127,10 @@ public class SimulaciaStanok extends SimulacneJadro
     @Override
     protected void poReplikacii()
     {
-        System.out.println("Statistika priemerna doba v systeme: " + this.casVSysteme.vypocitajStatistiku());
+        this.statistikaVelkostFrontu.pridajHodnotu(this.getAktualnySimulacnyCas(), this.getPocetAgentovVoFronte());
+
+        System.out.println("[STATISTIKA] Priemerna doba v systeme: " + this.statistikaCasSystem.vypocitajStatistiku());
+        System.out.println("[STATISTIKA] Priemerna doba vo fronte: " + this.statistikaCasFront.vypocitajStatistiku());
+        System.out.println("[STATISTIKA] Priemerna velkost frontu: " + this.statistikaVelkostFrontu.vypocitajStatistiku());
     }
 }

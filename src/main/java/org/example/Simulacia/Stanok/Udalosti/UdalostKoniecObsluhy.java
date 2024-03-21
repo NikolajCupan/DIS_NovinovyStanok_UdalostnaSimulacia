@@ -32,7 +32,7 @@ public class UdalostKoniecObsluhy extends Udalost
         agent.vypis();
 
         // Zaznamenanie statistik
-        simulacia.getCasVSysteme().pridajHodnotu(agent.getCasKoncaObsluhy() - agent.getCasPrichodu());
+        simulacia.getStatistikaCasSystem().pridajHodnotu(agent.getCasKoncaObsluhy() - agent.getCasPrichodu());
 
         // Naplanovanie dalsej obsluhy
         if (simulacia.getPocetAgentovVoFronte() == 0)
@@ -44,6 +44,9 @@ public class UdalostKoniecObsluhy extends Udalost
             Agent odobratyAgent = simulacia.odoberAgentaZFrontu();
             UdalostZaciatokObsluhy zaciatokObsluhy = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania(), odobratyAgent);
             simulacia.naplanujUdalost(zaciatokObsluhy);
+
+            simulacia.getStatistikaVelkostFrontu().pridajHodnotu(this.getCasVykonania(),
+                simulacia.getPocetAgentovVoFronte());
         }
     }
 }

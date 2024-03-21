@@ -30,6 +30,9 @@ public class UdalostZaciatokObsluhy extends Udalost
         Agent agent = this.getAgent();
         agent.setCasZaciatkuObsluhy(this.getCasVykonania());
 
+        // Zaznamenanie statistik
+        simulacia.getStatistikaCasFront().pridajHodnotu(agent.getCasZaciatkuObsluhy() - agent.getCasPrichodu());
+
         double dlzkaObsluhy = simulacia.getSpojityTrojuholnikovyGenerator().sample();
         double casVykonania = this.getCasVykonania() + dlzkaObsluhy;
 

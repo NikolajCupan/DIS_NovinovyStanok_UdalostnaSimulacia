@@ -41,6 +41,8 @@ public class UdalostPrichodZakaznika extends Udalost
         {
             // Niekto je obsluhovany, pridaj agenta do frontu
             simulacia.pridajAgentaDoFrontu(agent);
+            simulacia.getStatistikaVelkostFrontu().pridajHodnotu(this.getCasVykonania(),
+                simulacia.getPocetAgentovVoFronte());
         }
         else
         {

@@ -60,6 +60,7 @@ public abstract class SimulacneJadro
                 else
                 {
                     // Presiahnuty cas trvania simulacie
+                    this.aktualnySimulacnyCas = this.dlzkaTrvaniaSimulacie;
                     break;
                 }
             }
