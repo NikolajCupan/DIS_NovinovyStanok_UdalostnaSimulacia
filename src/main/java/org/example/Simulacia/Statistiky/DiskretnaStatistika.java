@@ -92,9 +92,9 @@ public class DiskretnaStatistika
 
     private void vypocitajIntervalSpolahlivosti()
     {
-        this.dolnaHranicaIS = this.priemer - Konstanty.KVANTIL_95_PERCENT
+        this.dolnaHranicaIS = this.priemer - Konstanty.KVANTIL_99_PERCENT
             * (this.smerodajnaOdchylka / Math.sqrt(this.data.size()));
-        this.hornaHranicaIS = this.priemer + Konstanty.KVANTIL_95_PERCENT
+        this.hornaHranicaIS = this.priemer + Konstanty.KVANTIL_99_PERCENT
             * (this.smerodajnaOdchylka / Math.sqrt(this.data.size()));
     }
 

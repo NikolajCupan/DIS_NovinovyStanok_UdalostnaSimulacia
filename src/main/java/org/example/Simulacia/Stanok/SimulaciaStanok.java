@@ -156,7 +156,7 @@ public class SimulaciaStanok extends SimulacneJadro
 
         this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
         this.celkovaStatistikaCasFront.pridajHodnotu(this.statistikaCasFront.getPriemer());
-        this.celkovaStatistikaVelkostFrontu.pridajHodnotu(this.statistikaVelkostFrontu.getStatistika());
+        this.celkovaStatistikaVelkostFrontu.pridajHodnotu(this.statistikaVelkostFrontu.getPriemer());
 
         if (this.getAktualnaReplikacia() % 10000 == 0)
         {

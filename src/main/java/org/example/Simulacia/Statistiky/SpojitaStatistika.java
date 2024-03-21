@@ -31,7 +31,7 @@ public class SpojitaStatistika
         this.data.add(new Stav(vaha, hodnota));
     }
 
-    public double getStatistika()
+    public double getPriemer()
     {
         this.skontrolujData();
 

@@ -15,4 +15,5 @@ public class Konstanty
 
     // Intervaly spolahlivosti
     public static final double KVANTIL_95_PERCENT = 1.96;
+    public static final double KVANTIL_99_PERCENT = 2.58;
 }
