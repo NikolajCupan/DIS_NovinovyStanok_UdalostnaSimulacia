@@ -9,5 +9,7 @@ public class Konstanty
     public static final double ZACIATOK_SEKUND = 9 * 60 * 60;
     public static final double KONIEC_SEKUND = 17 * 60 * 60;
 
+    public static final boolean DEBUG_VYPIS_AGENT = false;
+    public static final boolean DEBUG_VYPIS_UDALOST = false;
     public static final int DLZKA_PAUZY_MS = 1000;
 }

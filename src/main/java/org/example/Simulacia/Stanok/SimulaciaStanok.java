@@ -1,5 +1,6 @@
 package org.example.Simulacia.Stanok;
 
+import org.example.Generatory.Ostatne.DeterministickyGenerator;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Generatory.SpojityTrojuholnikovyGenerator;
@@ -104,8 +105,7 @@ public class SimulaciaStanok extends SimulacneJadro
         this.nastavKomparator(komparator);
 
         this.spojityExponencialnyGenerator = new SpojityExponencialnyGenerator(1.0 / 240.0, this.generatorNasad);
-        this.spojityTrojuholnikovyGenerator = new SpojityTrojuholnikovyGenerator(100.0, 400.0, 120.0,
-            this.generatorNasad);
+        this.spojityTrojuholnikovyGenerator = new SpojityTrojuholnikovyGenerator(100.0, 400.0, 120.0, this.generatorNasad);
 
         // Vynulovanie statistik
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika();
@@ -132,7 +132,7 @@ public class SimulaciaStanok extends SimulacneJadro
         this.statistikaCasFront = new DiskretnaStatistika();
         this.statistikaVelkostFrontu = new SpojitaStatistika();
 
-        // Naplanovania prichodu 1. zakaznika v case 0.0
+        // Naplanovanie prichodu 1. zakaznika v case 0.0
         UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0, new Agent(Identifikator.getID()));
         this.naplanujUdalost(prichod);
     }

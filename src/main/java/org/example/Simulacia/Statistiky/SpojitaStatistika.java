@@ -4,31 +4,31 @@ import java.util.ArrayList;
 
 public class SpojitaStatistika
 {
-    private static class StavFrontu
+    private static class Stav
     {
-        protected double cas;
-        protected int velkostFrontu;
+        protected double vaha;
+        protected int hodnota;
 
-        protected StavFrontu(double cas, int velkostFrontu)
+        protected Stav(double vaha, int hodnota)
         {
-            this.cas = cas;
-            this.velkostFrontu = velkostFrontu;
+            this.vaha = vaha;
+            this.hodnota = hodnota;
         }
     }
 
-    private final ArrayList<StavFrontu> data;
+    private final ArrayList<Stav> data;
 
     public SpojitaStatistika()
     {
         this.data = new ArrayList<>();
 
-        // Prvotny stav, ked je front prazdny
-        this.data.add(new StavFrontu(0.0, 0));
+        // Prvotny stav
+        this.data.add(new Stav(0.0, 0));
     }
 
-    public void pridajHodnotu(double cas, int velkostFrontu)
+    public void pridajHodnotu(double vaha, int hodnota)
     {
-        this.data.add(new StavFrontu(cas, velkostFrontu));
+        this.data.add(new Stav(vaha, hodnota));
     }
 
     public double vypocitajStatistiku()
@@ -37,18 +37,18 @@ public class SpojitaStatistika
 
         if (this.data.size() == 1)
         {
-            // Front bol po cely cas prazdny
+            // Statistika neobsahuje ziadne zaznamy
             return 0;
         }
 
         double citatel = 0.0;
-        double menovatel = this.data.getLast().cas;
+        double menovatel = this.data.getLast().vaha;
         for (int i = 0; i < this.data.size() - 1; i++)
         {
-            StavFrontu curStav = this.data.get(i);
-            StavFrontu nextStav = this.data.get(i + 1);
+            Stav curStav = this.data.get(i);
+            Stav nextStav = this.data.get(i + 1);
 
-            citatel += (nextStav.cas - curStav.cas) * curStav.velkostFrontu;
+            citatel += (nextStav.vaha - curStav.vaha) * curStav.hodnota;
         }
 
         return citatel / menovatel;
@@ -56,8 +56,8 @@ public class SpojitaStatistika
 
     private void skontrolujData()
     {
-        StavFrontu prvy = this.data.getFirst();
-        if (prvy.cas != 0.0 || prvy.velkostFrontu != 0)
+        Stav prvy = this.data.getFirst();
+        if (prvy.vaha != 0.0 || prvy.hodnota != 0)
         {
             throw new RuntimeException("Prvy element spojitej statistiky je neplatny!");
         }
@@ -67,9 +67,9 @@ public class SpojitaStatistika
             return;
         }
 
-        StavFrontu predposledny = this.data.get(this.data.size() - 2);
-        StavFrontu posledny = this.data.getLast();
-        if (predposledny.velkostFrontu != posledny.velkostFrontu)
+        Stav predposledny = this.data.get(this.data.size() - 2);
+        Stav posledny = this.data.getLast();
+        if (predposledny.hodnota != posledny.hodnota)
         {
             throw new RuntimeException("Posledny element spojitej statistiky je neplatny!");
         }

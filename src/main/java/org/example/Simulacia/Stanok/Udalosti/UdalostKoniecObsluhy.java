@@ -1,5 +1,6 @@
 package org.example.Simulacia.Stanok.Udalosti;
 
+import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.Agent;
 import org.example.Simulacia.Stanok.SimulaciaStanok;
@@ -14,9 +15,12 @@ public class UdalostKoniecObsluhy extends Udalost
 
     private void vypis()
     {
-        System.out.print("[UDALOST " + this.getAgent().getID() + "]   ");
-        System.out.format("%-30s", "Koniec obsluhy zakaznika");
-        System.out.println(this.getCasVykonania());
+        if (Konstanty.DEBUG_VYPIS_UDALOST)
+        {
+            System.out.print("[UDALOST " + this.getAgent().getID() + "]     ");
+            System.out.format("%-35s", "Koniec obsluhy zakaznika");
+            System.out.println(this.getCasVykonania());
+        }
     }
 
     @Override
@@ -27,12 +31,12 @@ public class UdalostKoniecObsluhy extends Udalost
         simulacia.setObsluhaPrebieha(false);
 
         // Nastavenie atributov agenta, ktory udalost vykonava
-        Agent agent = this.getAgent();
-        agent.setCasKoncaObsluhy(this.getCasVykonania());
-        agent.vypis();
+        Agent vykonavajuciAgent = this.getAgent();
+        vykonavajuciAgent.setCasKoniecObsluhy(this.getCasVykonania());
+        vykonavajuciAgent.vypis();
 
         // Zaznamenanie statistik
-        simulacia.getStatistikaCasSystem().pridajHodnotu(agent.getCasKoncaObsluhy() - agent.getCasPrichodu());
+        simulacia.getStatistikaCasSystem().pridajHodnotu(vykonavajuciAgent.getCasKoniecObsluhy() - vykonavajuciAgent.getCasPrichod());
 
         // Naplanovanie dalsej obsluhy
         if (simulacia.getPocetAgentovVoFronte() == 0)
@@ -45,8 +49,7 @@ public class UdalostKoniecObsluhy extends Udalost
             UdalostZaciatokObsluhy zaciatokObsluhy = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania(), odobratyAgent);
             simulacia.naplanujUdalost(zaciatokObsluhy);
 
-            simulacia.getStatistikaVelkostFrontu().pridajHodnotu(this.getCasVykonania(),
-                simulacia.getPocetAgentovVoFronte());
+            simulacia.getStatistikaVelkostFrontu().pridajHodnotu(this.getCasVykonania(), simulacia.getPocetAgentovVoFronte());
         }
     }
 }

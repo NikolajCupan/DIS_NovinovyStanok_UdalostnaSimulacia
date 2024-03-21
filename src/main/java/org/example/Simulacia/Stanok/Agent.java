@@ -1,27 +1,37 @@
 package org.example.Simulacia.Stanok;
 
+import org.example.Ostatne.Konstanty;
+
 public class Agent
 {
-    private long ID;
+    private final long ID;
 
-    private double casPrichodu;
-    private double casZaciatkuObsluhy;
-    private double casKoncaObsluhy;
+    private double casPrichod;
+    private double casZaciatokObsluhy;
+    private double casKoniecObsluhy;
 
     public Agent(long ID)
     {
         this.ID = ID;
 
-        this.casPrichodu = -1;
-        this.casZaciatkuObsluhy = -1;
-        this.casKoncaObsluhy = -1;
+        this.casPrichod = -1;
+        this.casZaciatokObsluhy = -1;
+        this.casKoniecObsluhy = -1;
     }
 
     public void vypis()
     {
-        System.out.format("%-45s%n", "     [AGENT " + this.ID + "] Prichod: " + this.casPrichodu);
-        System.out.format("%-45s%n", "     [AGENT " + this.ID + "] Zaciatok obsluhy: " + this.casZaciatkuObsluhy);
-        System.out.format("%-45s%n", "     [AGENT " + this.ID + "] Koniec obsluhy: " + this.casKoncaObsluhy);
+        if (Konstanty.DEBUG_VYPIS_AGENT)
+        {
+            System.out.format("%-53s", "    [AGENT " + this.ID + "]   Prichod");
+            System.out.format("%-20s%n", this.casPrichod);
+
+            System.out.format("%-53s", "    [AGENT " + this.ID + "]   Zaciatok obsluhy");
+            System.out.format("%-30s%n", this.casZaciatokObsluhy);
+
+            System.out.format("%-53s", "    [AGENT " + this.ID + "]   Koniec obsluhy");
+            System.out.format("%-20s%n", this.casKoniecObsluhy);
+        }
     }
 
     public long getID()
@@ -29,38 +39,33 @@ public class Agent
         return this.ID;
     }
 
-    public double getCasPrichodu()
+    public double getCasPrichod()
     {
-        return this.casPrichodu;
+        return this.casPrichod;
     }
 
-    public double getCasZaciatkuObsluhy()
+    public double getCasZaciatokObsluhy()
     {
-        return this.casZaciatkuObsluhy;
+        return this.casZaciatokObsluhy;
     }
 
-    public double getCasKoncaObsluhy()
+    public double getCasKoniecObsluhy()
     {
-        return this.casKoncaObsluhy;
+        return this.casKoniecObsluhy;
     }
 
-    public void setID(long ID)
+    public void setCasPrichod(double casPrichod)
     {
-        this.ID = ID;
+        this.casPrichod = casPrichod;
     }
 
-    public void setCasPrichodu(double casPrichodu)
+    public void setCasZaciatokObsluhy(double casZaciatokObsluhy)
     {
-        this.casPrichodu = casPrichodu;
+        this.casZaciatokObsluhy = casZaciatokObsluhy;
     }
 
-    public void setCasZaciatkuObsluhy(double casZaciatkuObsluhy)
+    public void setCasKoniecObsluhy(double casKoniecObsluhy)
     {
-        this.casZaciatkuObsluhy = casZaciatkuObsluhy;
-    }
-
-    public void setCasKoncaObsluhy(double casKoncaObsluhy)
-    {
-        this.casKoncaObsluhy = casKoncaObsluhy;
+        this.casKoniecObsluhy = casKoniecObsluhy;
     }
 }
