@@ -12,4 +12,7 @@ public class Konstanty
     public static final boolean DEBUG_VYPIS_AGENT = false;
     public static final boolean DEBUG_VYPIS_UDALOST = false;
     public static final int DLZKA_PAUZY_MS = 1000;
+
+    // Intervaly spolahlivosti
+    public static final double KVANTIL_95_PERCENT = 1.96;
 }

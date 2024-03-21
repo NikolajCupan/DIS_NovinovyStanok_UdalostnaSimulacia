@@ -1,6 +1,5 @@
 package org.example.Simulacia.Stanok;
 
-import org.example.Generatory.Ostatne.DeterministickyGenerator;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Generatory.SpojityTrojuholnikovyGenerator;
@@ -116,9 +115,19 @@ public class SimulaciaStanok extends SimulacneJadro
     @Override
     protected void poReplikaciach()
     {
-        System.out.println("[STATISTIKA] Priemerna doba v systeme: " + this.celkovaStatistikaCasSystem.vypocitajStatistiku());
-        System.out.println("[STATISTIKA] Priemerna doba vo fronte: " + this.celkovaStatistikaCasFront.vypocitajStatistiku());
-        System.out.println("[STATISTIKA] Priemerna velkost frontu: " + this.celkovaStatistikaVelkostFrontu.vypocitajStatistiku());
+        this.celkovaStatistikaCasSystem.vypocitajStatistiky();
+        this.celkovaStatistikaCasFront.vypocitajStatistiky();
+        this.celkovaStatistikaVelkostFrontu.vypocitajStatistiky();
+
+        System.out.println("[STATISTIKA] Priemerna doba v systeme: "
+            + this.celkovaStatistikaCasSystem.getPriemer() + " [" + this.celkovaStatistikaCasSystem.getDolnaHranicaIS()
+            + ", " + this.celkovaStatistikaCasSystem.getHornaHranicaIS() + "]");
+        System.out.println("[STATISTIKA] Priemerna doba vo fronte: "
+            + this.celkovaStatistikaCasFront.getPriemer() + " [" + this.celkovaStatistikaCasFront.getDolnaHranicaIS()
+            + ", " + this.celkovaStatistikaCasFront.getHornaHranicaIS() + "]");
+        System.out.println("[STATISTIKA] Priemerna velkost frontu: "
+            + this.celkovaStatistikaVelkostFrontu.getPriemer() + " [" + this.celkovaStatistikaVelkostFrontu.getDolnaHranicaIS()
+            + ", " + this.celkovaStatistikaVelkostFrontu.getHornaHranicaIS() + "]");
     }
 
     @Override
@@ -142,8 +151,16 @@ public class SimulaciaStanok extends SimulacneJadro
     {
         this.statistikaVelkostFrontu.pridajHodnotu(this.getAktualnySimulacnyCas(), this.getPocetAgentovVoFronte());
 
-        this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.vypocitajStatistiku());
-        this.celkovaStatistikaCasFront.pridajHodnotu(this.statistikaCasFront.vypocitajStatistiku());
-        this.celkovaStatistikaVelkostFrontu.pridajHodnotu(this.statistikaVelkostFrontu.vypocitajStatistiku());
+        this.statistikaCasSystem.vypocitajStatistiky();
+        this.statistikaCasFront.vypocitajStatistiky();
+
+        this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
+        this.celkovaStatistikaCasFront.pridajHodnotu(this.statistikaCasFront.getPriemer());
+        this.celkovaStatistikaVelkostFrontu.pridajHodnotu(this.statistikaVelkostFrontu.getStatistika());
+
+        if (this.getAktualnaReplikacia() % 10000 == 0)
+        {
+            System.out.println("Aktualna replikacia: " + this.getAktualnaReplikacia());
+        }
     }
 }
