@@ -51,6 +51,11 @@ public abstract class SimulacneJadro
 
         while (this.aktualnaReplikacia <= this.pocetReplikacii)
         {
+            if (this.simulaciaUkoncena)
+            {
+                break;
+            }
+
             this.predReplikaciouJadro();
             this.predReplikaciou();
 

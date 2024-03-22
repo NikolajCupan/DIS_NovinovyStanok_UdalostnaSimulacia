@@ -115,9 +115,9 @@ public class SimulaciaStanok extends SimulacneJadro
     @Override
     protected void poReplikaciach()
     {
-        this.celkovaStatistikaCasSystem.prepocitajStatistiky();
-        this.celkovaStatistikaCasFront.prepocitajStatistiky();
-        this.celkovaStatistikaVelkostFrontu.prepocitajStatistiky();
+        this.celkovaStatistikaCasSystem.skusPrepocitatStatistiky();
+        this.celkovaStatistikaCasFront.skusPrepocitatStatistiky();
+        this.celkovaStatistikaVelkostFrontu.skusPrepocitatStatistiky();
 
         System.out.println("[STATISTIKA] Priemerna doba v systeme: "
             + this.celkovaStatistikaCasSystem.getPriemer() + " [" + this.celkovaStatistikaCasSystem.getDolnaHranicaIS()
@@ -151,11 +151,19 @@ public class SimulaciaStanok extends SimulacneJadro
     {
         this.statistikaVelkostFrontu.pridajHodnotu(this.getAktualnySimulacnyCas(), this.getPocetAgentovVoFronte());
 
-        this.statistikaCasSystem.prepocitajStatistiky();
-        this.statistikaCasFront.prepocitajStatistiky();
+        this.statistikaCasSystem.skusPrepocitatStatistiky();
+        this.statistikaCasFront.skusPrepocitatStatistiky();
 
-        this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
-        this.celkovaStatistikaCasFront.pridajHodnotu(this.statistikaCasFront.getPriemer());
+        if (this.statistikaCasSystem.getStatistikyVypocitane())
+        {
+            this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
+        }
+
+        if (this.statistikaCasFront.getStatistikyVypocitane())
+        {
+            this.celkovaStatistikaCasFront.pridajHodnotu(this.statistikaCasFront.getPriemer());
+        }
+
         this.celkovaStatistikaVelkostFrontu.pridajHodnotu(this.statistikaVelkostFrontu.getPriemer());
 
         if (this.getAktualnaReplikacia() % 10000 == 0)

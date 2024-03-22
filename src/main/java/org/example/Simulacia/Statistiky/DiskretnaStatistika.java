@@ -47,8 +47,13 @@ public class DiskretnaStatistika
         }
     }
 
-    public void prepocitajStatistiky()
+    public void skusPrepocitatStatistiky()
     {
+        if (this.data.isEmpty())
+        {
+            return;
+        }
+
         this.vypocitajPriemer();
         this.vypocitajSmerodajnuOdchylku();
         this.vypocitajIntervalSpolahlivosti();
@@ -58,11 +63,6 @@ public class DiskretnaStatistika
 
     private void vypocitajPriemer()
     {
-        if (this.data.isEmpty())
-        {
-            throw new RuntimeException("Diskretna statistika neobsahuje ziadne hodnoty!");
-        }
-
         final int pocetZaznamov = this.data.size();
         double sucetHodnot = 0.0;
 
@@ -93,10 +93,20 @@ public class DiskretnaStatistika
 
     private void vypocitajIntervalSpolahlivosti()
     {
+        if (this.priemer == -1 || this.smerodajnaOdchylka == -1)
+        {
+            throw new RuntimeException("Nie je mozne vypocitat IS ak nie je vypocitane priemer a smerodajna odchylka!");
+        }
+
         this.dolnaHranicaIS = this.priemer - Konstanty.KVANTIL_99_PERCENT
             * (this.smerodajnaOdchylka / Math.sqrt(this.data.size()));
         this.hornaHranicaIS = this.priemer + Konstanty.KVANTIL_99_PERCENT
             * (this.smerodajnaOdchylka / Math.sqrt(this.data.size()));
+    }
+
+    public boolean getStatistikyVypocitane()
+    {
+        return this.statistikyVypocitane;
     }
 
     public double getPriemer()
