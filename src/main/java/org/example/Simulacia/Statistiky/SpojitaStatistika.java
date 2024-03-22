@@ -34,13 +34,16 @@ public class SpojitaStatistika
     public double getPriemer()
     {
         this.skontrolujData();
+
         if (this.data.size() == 1)
         {
             // Statistika neobsahuje ziadne zaznamy
             return 0;
         }
+
         double citatel = 0.0;
         double menovatel = this.data.getLast().vaha;
+
         for (int i = 0; i < this.data.size() - 1; i++)
         {
             Stav curStav = this.data.get(i);
